@@ -21,4 +21,11 @@ public class Bill {
     private List<ProductItem>productsItems;
     @Transient
     private Customer customer;
+    public double getTotal(){
+        double somme=0;
+        for (ProductItem pi:productsItems){
+            somme+=pi.getAmount();
+        }
+        return somme;
+    }
 }

@@ -24,6 +24,6 @@ export class BillsComponent implements OnInit {
   }
 
   getBillDetails(b: any) {
-
+    this.router.navigateByUrl("/productitems/"+b.id);
   }
 }
