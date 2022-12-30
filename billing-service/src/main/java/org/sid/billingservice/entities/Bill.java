@@ -1,6 +1,7 @@
 package org.sid.billingservice.entities;
 
 import lombok.*;
+import org.sid.billingservice.enums.BillStatus;
 import org.sid.billingservice.model.Customer;
 
 import javax.persistence.*;
@@ -14,6 +15,7 @@ public class Bill {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id ;
     private Date billdate;
+    private BillStatus status;
     private Long customerId;
     @OneToMany(mappedBy = "bill")
     private List<ProductItem>productsItems;

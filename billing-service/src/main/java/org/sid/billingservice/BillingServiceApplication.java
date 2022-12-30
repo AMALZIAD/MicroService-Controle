@@ -2,6 +2,7 @@ package org.sid.billingservice;
 
 import org.sid.billingservice.entities.Bill;
 import org.sid.billingservice.entities.ProductItem;
+import org.sid.billingservice.enums.BillStatus;
 import org.sid.billingservice.model.Customer;
 import org.sid.billingservice.model.Product;
 import org.sid.billingservice.repositories.BillRepository;
@@ -33,25 +34,33 @@ public class BillingServiceApplication {
                             CustomerRestClient customerRestClient,
                             ProductRestClient productRestClient){
         return  args -> {
-           Collection<Product> products=productRestClient.allProducts().getContent();
-
+            List<Customer> customers=customerRestClient.allCustomers().getContent().stream().toList();
+            List<Product> products=productRestClient.allProducts().getContent().stream().toList();
+            Random random=new Random();
             Long customerId=1L;
-            Customer customer=customerRestClient.findCustomerById(customerId);
-            if(customer==null) throw new RuntimeException("Customer not found");
-            Bill bill=new Bill();
-            bill.setBilldate(new Date());
-            bill.setCustomerId(customerId);
-            Bill savedBill=billRepository.save(bill);
-            products.forEach(product -> {
-                System.out.println(product.toString());
-                ProductItem productItem=new ProductItem();
-                productItem.setProductId(product.getId());
-                productItem.setBill(bill);
-                productItem.setQuantity(1+new Random().nextInt(10));
-                productItem.setPrice(product.getPrice());
-                productItem.setDiscount(Math.random());
-                productItemRepository.save(productItem);
-            });
+            Customer customer=customerRestClient.customerById(customerId);
+            for (int i =0;i<20; i++) {
+                Bill bill=Bill.builder()
+                        .customerId(customers.get(random.nextInt(customers.size())).getId())
+                        .status(Math.random()>0.5? BillStatus.PAIED:BillStatus.CREATED)
+                        .billdate(new Date())
+                        .build();
+                Bill savedBill=billRepository.save(bill);
+                for (int j =0; j< products.size();j++){
+                    if(Math.random()>0.70){
+                        ProductItem productItem=ProductItem.builder()
+                                .bill(savedBill)
+                                .productId(products.get(j).getId())
+                                .price(products.get(j).getPrice())
+                                .quantity(1+random.nextInt(10))
+                                .discount(Math.random())
+                                .build();
+                        productItemRepository.save(productItem);
+                    }
+
+                }
+            }
+
         };
     }
 }

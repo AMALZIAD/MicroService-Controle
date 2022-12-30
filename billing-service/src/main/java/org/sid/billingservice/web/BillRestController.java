@@ -1,6 +1,8 @@
 package org.sid.billingservice.web;
 
 import org.sid.billingservice.entities.Bill;
+import org.sid.billingservice.model.Customer;
+import org.sid.billingservice.model.Product;
 import org.sid.billingservice.repositories.BillRepository;
 import org.sid.billingservice.repositories.ProductItemRepository;
 import org.sid.billingservice.services.CustomerRestClient;
@@ -8,6 +10,7 @@ import org.sid.billingservice.services.ProductRestClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+
 
 @RestController
 public class BillRestController {
@@ -25,13 +28,17 @@ public class BillRestController {
         this.customerRestClient = customerRestClient;
         this.productRestClient = productRestClient;
     }
+
     @GetMapping("/fullbill/{id}")
     public Bill bill(@PathVariable Long id){
         Bill bill=billRepository.findById(id).get();
-        bill.setCustomer(customerRestClient.findCustomerById(bill.getCustomerId()));
+        Customer customer=customerRestClient.customerById(bill.getCustomerId());
+        System.out.println(customer);
+        bill.setCustomer(customer);
         //product
         bill.getProductsItems().forEach(pi -> {
-            pi.setProduct(productRestClient.findProductById(pi.getProductId()));
+            Product product=productRestClient.productById(pi.getProductId());
+            pi.setProduct(product);
         });
         return bill;
     }
