@@ -1,0 +1,46 @@
+<div class="container mt-2" *ngIf="billdetails" >
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card ">
+        <div class="card-header">Bill ID :{{billId}}</div>
+        <div class="card-body text-sm-start">
+          <ul class="list-group">
+            <li class="list-group-item">Bill date : {{billdetails.billdate | date:'dd/MM/yyyy'}}</li>
+            <li class="list-group-item">Bill Status : {{billdetails.status}}</li>
+            <li class="list-group-item">Customer Id : {{billdetails.customer.id}}</li>
+            <li class="list-group-item">Customer Name : {{billdetails.customer.name}}</li>
+            <li class="list-group-item">Customer Email : {{billdetails.customer.email}}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card ">
+        <div class="card-header">Product Items</div>
+        <div class="card-body text-sm-start">
+          <table class="table table-ms" >
+            <thead>
+            <tr class="bg-black text-white">
+              <th>ID</th><th>Name</th><th>Quantity</th><th>Price</th><th>Discount</th><th>SubTotal</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let p of billdetails.productsItems">
+              <td>{{p.product.id}}</td>
+              <td>{{p.product.name}}</td>
+              <td>{{p.quantity}}</td>
+              <td class="text-end">{{p.price | number :'.2' }}</td>
+              <td class="text-end">{{p.discount | number :'.2'}}</td>
+              <td class="text-end">{{p.amount | number :'.2'}}</td>
+            </tr>
+            <tr class="bg-black text-white">
+              <td colspan="5" class="text-end">Bill Total :</td>
+              <td class="text-end">{{billdetails.total | number :'.2'}}</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -3,12 +3,12 @@ import {HttpClient} from "@angular/common/http";
 import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
-  selector: 'app-productitems',
-  templateUrl: './productitems.component.html',
-  styleUrls: ['./productitems.component.css']
+  selector: 'app-bill-details',
+  templateUrl: './bill-details.component.html',
+  styleUrls: ['./bill-details.component.css']
 })
-export class ProductitemsComponent implements OnInit {
-  productitems: any;
+export class BillDetailsComponent implements OnInit {
+  billdetails: any;
   billId!:number;
   constructor(private http: HttpClient,private router:Router,private route:ActivatedRoute ) {
     this.billId=route.snapshot.params['billId'];
@@ -19,7 +19,7 @@ export class ProductitemsComponent implements OnInit {
     console.log("hhhh "+this.billId);
     this.http.get("http://localhost:8888/BILLING-SERVICE/fullbill/"+this.billId)
       .subscribe({ next : (data)=>{
-          this.productitems= data;
+          this.billdetails= data;
         },
         error : (err)=>{}
       });

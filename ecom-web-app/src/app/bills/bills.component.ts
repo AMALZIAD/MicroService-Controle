@@ -21,9 +21,10 @@ export class BillsComponent implements OnInit {
         },
         error : ()=>{}
       });
+
   }
 
   getBillDetails(b: any) {
-    this.router.navigateByUrl("/productitems/"+b.id);
+    this.router.navigateByUrl("/bill-details/"+b.id);
   }
 }
