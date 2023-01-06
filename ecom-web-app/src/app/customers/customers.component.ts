@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import * as http from "http";
 import {Router} from "@angular/router";
+import {CustomerService} from "../services/customer.service";
+import {catchError, map, Observable, throwError} from "rxjs";
+import {Customer} from "../model/customer.model";
 
 @Component({
   selector: 'app-customers',
@@ -10,20 +13,30 @@ import {Router} from "@angular/router";
 })
 export class CustomersComponent implements OnInit {
 
-  public customers : any;
-  constructor(private  http: HttpClient, private router: Router) { }
+   customers !: Observable<Customer[]> ;
+  errorMessage!:string;
+  constructor(private  customerService: CustomerService, private router: Router) { }
 
-  ngOnInit(): void {
+  /*ngOnInitOld(): void {
     this.http.get("http://localhost:8888/CUSTOMER-SERVICE/customers/?projection=fullcustomer")
       .subscribe({ next : (data)=>{
           this.customers= data;
         },
         error : ()=>{}
       });
+  }*/
+  ngOnInit(): void {
+     this.customers=this.customerService.getCustomer().pipe(
+       catchError(err =>{
+         this.errorMessage=err.message;
+         return throwError(err);
+       })
+     );
+
   }
 
 
-  getBills(c: any) {
+  getBills(c: Customer) {
     this.router.navigateByUrl("/bills/"+c.id);
   }
 }

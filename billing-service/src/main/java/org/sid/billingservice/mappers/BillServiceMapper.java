@@ -2,6 +2,8 @@ package org.sid.billingservice.mappers;
 
 import org.sid.billingservice.dtos.CustomerDTO;
 import org.sid.billingservice.dtos.ProductDTO;
+import org.sid.billingservice.dtos.ProductItemDTO;
+import org.sid.billingservice.entities.ProductItem;
 import org.sid.billingservice.model.Customer;
 import org.sid.billingservice.model.Product;
 import org.springframework.beans.BeanUtils;
@@ -28,5 +30,16 @@ public class BillServiceMapper {
         Product product=new Product();
         BeanUtils.copyProperties(productDTO,product);
         return product;
+    }
+
+    public ProductItemDTO fromProductItem(ProductItem productItem){
+        ProductItemDTO productItemDTO=new ProductItemDTO();
+        BeanUtils.copyProperties(productItem,productItemDTO);
+        return productItemDTO;
+    }
+    public ProductItem fromProductItemDTO(ProductItemDTO productItemDTO){
+        ProductItem productItem=new ProductItem();
+        BeanUtils.copyProperties(productItemDTO,productItem);
+        return productItem;
     }
 }

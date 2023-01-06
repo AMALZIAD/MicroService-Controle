@@ -1,4 +1,7 @@
 <div class="container">
+  <div *ngIf="errorMessage">
+    {{errorMessage}}
+  </div>
   <table class="table" *ngIf="bills" >
     <thead>
     <tr>
@@ -6,7 +9,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let b of bills._embedded.bills">
+    <tr *ngFor="let b of bills |async as Bill">
       <td>{{b.id}}</td>
       <td>{{b.billdate}}</td>
       <td>{{b.customerId}}</td>

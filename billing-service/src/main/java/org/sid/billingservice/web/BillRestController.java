@@ -8,11 +8,11 @@ import org.sid.billingservice.repositories.ProductItemRepository;
 import org.sid.billingservice.services.BillService;
 import org.sid.billingservice.services.CustomerRestClient;
 import org.sid.billingservice.services.ProductRestClient;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RestResource;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -48,8 +48,10 @@ public class BillRestController {
     }
     @GetMapping("/byCustomerId/{id}")
     List<Bill> findByCustomerId(@PathVariable Long id){
+
         return billService.getCustomerBills(id);
     }
+
 
 
 }
