@@ -1,0 +1,6 @@
+#keycloak:
+#  realm: Finance-realm
+#  auth-server-url: http://localhost:8080/realms/Finance-realm/protocol/openid-connect/auth
+#  resource: billing-client
+#  public-client: true
+#  bearer-only: true

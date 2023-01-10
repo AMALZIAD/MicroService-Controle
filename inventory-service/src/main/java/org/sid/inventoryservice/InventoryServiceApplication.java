@@ -15,7 +15,7 @@ public class InventoryServiceApplication {
 
         SpringApplication.run(InventoryServiceApplication.class, args);
     }
-    @Bean
+    //@Bean
     CommandLineRunner start(ProductRepository productRepository, RepositoryRestConfiguration restConfiguration){
         restConfiguration.exposeIdsFor(Product.class);
         return args -> {

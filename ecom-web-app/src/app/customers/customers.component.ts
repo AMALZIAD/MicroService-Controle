@@ -5,6 +5,7 @@ import {Router} from "@angular/router";
 import {CustomerService} from "../services/customer.service";
 import {catchError, map, Observable, throwError} from "rxjs";
 import {Customer} from "../model/customer.model";
+import {KeycloakSecurityService} from "../services/keycloak-security.service";
 
 @Component({
   selector: 'app-customers',
@@ -15,7 +16,7 @@ export class CustomersComponent implements OnInit {
 
    customers !: Observable<Customer[]> ;
   errorMessage!:string;
-  constructor(private  customerService: CustomerService, private router: Router) { }
+  constructor(public sec:KeycloakSecurityService,private  customerService: CustomerService, private router: Router) { }
 
   /*ngOnInitOld(): void {
     this.http.get("http://localhost:8888/CUSTOMER-SERVICE/customers/?projection=fullcustomer")

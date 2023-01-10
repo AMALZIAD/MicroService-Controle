@@ -67,7 +67,7 @@ public class BillingServiceApplication {
     }*/
 
     //service style
-    @Bean
+   // @Bean
     CommandLineRunner start(BillService billService,
                             CustomerRestClient customerRestClient,
                             ProductRestClient productRestClient){

@@ -1,19 +1,9 @@
 package org.sid.billingservice.web;
 
 import org.sid.billingservice.entities.Bill;
-import org.sid.billingservice.model.Customer;
-import org.sid.billingservice.model.Product;
-import org.sid.billingservice.repositories.BillRepository;
-import org.sid.billingservice.repositories.ProductItemRepository;
 import org.sid.billingservice.services.BillService;
-import org.sid.billingservice.services.CustomerRestClient;
-import org.sid.billingservice.services.ProductRestClient;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.repository.query.Param;
-import org.springframework.data.rest.core.annotation.RestResource;
-import org.springframework.ui.Model;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 
@@ -37,18 +27,22 @@ public class BillRestController {
         });
         return bill;
     }*/
+
     @GetMapping("/")
+
     public List<Bill> bills(){
         return billService.getBills();
     }
+
     @GetMapping("/fullbill/{id}")
-    public Bill bill(@PathVariable Long id){
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public Bill bill(@RequestHeader("Authorization") @PathVariable Long id){
         Bill bill=billService.getBill(id);
         return bill;
     }
     @GetMapping("/byCustomerId/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     List<Bill> findByCustomerId(@PathVariable Long id){
-
         return billService.getCustomerBills(id);
     }
 

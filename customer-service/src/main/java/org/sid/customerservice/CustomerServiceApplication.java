@@ -17,7 +17,7 @@ public class CustomerServiceApplication {
         SpringApplication.run(CustomerServiceApplication.class, args);
     }
 
-    @Bean
+    //Bean
     CommandLineRunner start(CustomerRepository customerRepository ){
 
         return args -> {
