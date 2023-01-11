@@ -9,7 +9,7 @@ import {KeycloakSecurityService} from "../services/keycloak-security.service";
 export class NavbarComponent implements OnInit {
    tokenjson !: any;
   constructor(public readonly  sec: KeycloakSecurityService) {
-    this.tokenjson=sec.kc.tokenParsed;
+    this.tokenjson=sec.kc.tokenParsed;console.log(sec.kc.authenticated);
   }
 
   ngOnInit(): void {

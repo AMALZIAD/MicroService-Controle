@@ -7,22 +7,22 @@ declare var Keycloak:any;
 export class KeycloakSecurityService {
   public kc!:KeycloakInstance;
   constructor() {}
-   init() {
-    console.log("Security Initialized!");
-    this.kc = new Keycloak({
-      url: "http://localhost:8080/",
-      realm: "ecom-web-realm",
-      clientId: "billing-client"
-    });
-     this.kc.init({
-       onLoad:"check-sso"
-    }).then((authenticated)=>{
-       console.log(authenticated);
-       console.log(this.kc.token);
-     }, err=>{
-      console.log(err);
+   async init() {
+     console.log("Security Initialized!");
+     this.kc = new Keycloak({
+       url: "http://localhost:8080/",
+       realm: "ecom-web-realm",
+       clientId: "billing-client"
      });
+     try {
+       await this.kc.init({
+         onLoad: "check-sso"
+       });
+     }
+     catch (e) {
+       this.kc.login();
+     }
 
-  }
+   }
 
 }
