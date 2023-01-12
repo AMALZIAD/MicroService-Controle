@@ -1,17 +1,11 @@
 package org.sid.billingservice.web;
 
-import org.keycloak.KeycloakPrincipal;
-import org.keycloak.KeycloakSecurityContext;
-import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.sid.billingservice.entities.Bill;
 import org.sid.billingservice.services.BillService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 @RestController
@@ -36,7 +30,7 @@ public class BillRestController {
     }*/
 
     @GetMapping("/")
-    @CrossOrigin("*")
+    @PreAuthorize("hasAuthority('USER')")
     public List<Bill> bills(){
         return billService.getBills();
     }
